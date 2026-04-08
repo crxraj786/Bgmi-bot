@@ -13,9 +13,9 @@ import string
 # ============================================
 # CONFIGURATION
 # ============================================
-TOKEN = '8669620625:AAGAq4R4gcHTNM9QHTZ0ladGmFML9oGv8'
-ADMIN_ID = 1917682089
-OWNER = '@Prime_X_Army'
+TOKEN = '8791693090:AAHj7wsHbem4Dg4U4zPQrdck1IB6SUEghWA'
+ADMIN_ID = 6500273862
+OWNER = '@@Bgmi_Loaders0'
 BGMI_PATH = './bgmi'
 MAX_ATTACKS = 10
 MAX_DURATION = 600
