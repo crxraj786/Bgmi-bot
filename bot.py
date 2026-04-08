@@ -13,7 +13,9 @@ import string
 # ============================================
 # CONFIGURATION
 # ============================================
-TOKEN = '8791693090:AAHj7wsHbem4Dg4U4zPQrdck1IB6SUEghWA'
+import os
+
+TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = 6500273862
 OWNER = '@@Bgmi_Loaders0'
 BGMI_PATH = './bgmi'
