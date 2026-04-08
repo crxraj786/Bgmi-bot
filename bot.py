@@ -13,9 +13,9 @@ import string
 # ============================================
 # CONFIGURATION
 # ============================================
-TOKEN = '8669620625:AAGAq4R4gcHTNM9QHTZ0ladGmFML9oGv8'
-ADMIN_ID = 1917682089
-OWNER = '@Prime_X_Army'
+TOKEN = os.getenv("BOT_TOKEN")
+ADMIN_ID = 6500273862
+OWNER = '@@Bqmi_Loaders0'
 BGMI_PATH = './bgmi'
 MAX_ATTACKS = 10
 MAX_DURATION = 600
